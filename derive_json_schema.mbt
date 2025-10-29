@@ -315,10 +315,13 @@ fn schema_to_ast(
         [("type", maybe_nullable(mk_string("integer"))), ..extra_info],
       )
     Array(item~) =>
-      mk_json_object([
-        ("type", maybe_nullable(mk_string("array"))),
-        ("items", schema_to_ast(item)),
-      ])
+      mk_json_object(
+        [
+          ("type", maybe_nullable(mk_string("array"))),
+          ("items", schema_to_ast(item)),
+          ..extra_info,
+        ],
+      )
     Nullable(schema) => schema_to_ast(schema, nullable=true, extra_info~)
     Object(properties~, required~) => {
       let properties = properties.map(p => {
