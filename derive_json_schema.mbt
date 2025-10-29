@@ -202,7 +202,11 @@ fn record_to_schema(fields : @list.List[@syntax.FieldDecl]) -> Schema {
   let required = []
   for field in fields {
     let name = field.name.label
-    let description = try! field.doc.content.iter().join("\n").escape()[1:-1].to_string()
+    let description = try! field.doc.content
+      .iter()
+      .map(line => line.trim_start(char_set="\n\t ").to_string())
+      .join("\n")
+      .escape()[1:-1].to_string()
     let default = field_default(field.attrs)
     let enums = field_enumerate(field.attrs)
     let (schema, nullable) = match ty_to_schema(field.ty) {
@@ -318,7 +322,10 @@ fn schema_to_ast(
     Nullable(schema) => schema_to_ast(schema, nullable=true, extra_info~)
     Object(properties~, required~) => {
       let properties = properties.map(p => {
-        let extra_info = [("description", mk_string(p.description))]
+        let extra_info = []
+        if p.description.trim(char_set="\n\t ") != "" {
+          extra_info.push(("description", mk_string(p.description)))
+        }
         if p.default is Some(c) {
           extra_info.push(("default", constant_to_ast(c)))
         }

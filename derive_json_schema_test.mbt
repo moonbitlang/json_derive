@@ -30,15 +30,15 @@ test {
       #|  {
       #|    "type": "object",
       #|    "properties": {
-      #|      "v": { "type": "string", "description": "", "enum": ["a", "b", "c"] },
+      #|      "v": { "type": "string", "enum": ["a", "b", "c"] },
       #|      "w": { "type": "array", "items": { "type": "integer" } },
       #|      "x": {
       #|        "type": "string",
-      #|        "description": " doc for x\n doc2",
+      #|        "description": "doc for x\ndoc2",
       #|        "default": "*",
       #|      },
-      #|      "y": { "type": "boolean", "description": " doc for y", "default": false },
-      #|      "z": { "type": "integer", "description": " doc for z" },
+      #|      "y": { "type": "boolean", "description": "doc for y", "default": false },
+      #|      "z": { "type": "integer", "description": "doc for z" },
       #|    },
       #|    "required": ["v", "w"],
       #|  }
