@@ -3,9 +3,14 @@
     "moonbitlang/parser/syntax",
     "moonbitlang/parser/attribute",
     "moonbitlang/parser/basic",
-    "moonbitlang/x/fs",
     "moonbitlang/parser",
-    "moonbitlang/formatter"
+    "moonbitlang/formatter",
+    "peter-jerry-ye/wasi"
   ],
-  "is-main": true
+  "is-main": true,
+  "link": {
+    "wasm": {
+      "export-memory-name": "memory"
+    }
+  }
 }
