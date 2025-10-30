@@ -1,1 +1,1 @@
-moon run ../main.mbt -- input.mbt -o output.mbt
+wasmer run .. --dir . -- ./input.mbt -o ./output.mbt
