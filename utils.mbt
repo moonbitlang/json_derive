@@ -1,42 +1,42 @@
 ///|
-fn write_text_file(path : StringView, str : StringView) -> Unit raise {
-  let fd = @wasi.Fd::open(
-    path.to_string(),
-    open_flags=@wasi.OpenFlags::new().set(Create).set(Trunc),
-    rights=@wasi.Rights::new().set(Fd_write),
-  ) catch {
-    e => reraise(e)
-  }
-  let data = @encoding/utf8.encode(str)
-  let mut written = 0
-  while written < data.length() {
-    let n = fd.fd_write([data[written:]]) catch { e => reraise(e) }
-    written += n.0.reinterpret_as_int()
-  }
-}
+// fn write_text_file(path : StringView, str : StringView) -> Unit raise {
+//   let fd = @wasi.Fd::open(
+//     path.to_string(),
+//     open_flags=@wasi.OpenFlags::new().set(Create).set(Trunc),
+//     rights=@wasi.Rights::new().set(Fd_write),
+//   ) catch {
+//     e => reraise(e)
+//   }
+//   let data = @encoding/utf8.encode(str)
+//   let mut written = 0
+//   while written < data.length() {
+//     let n = fd.fd_write([data[written:]]) catch { e => reraise(e) }
+//     written += n.0.reinterpret_as_int()
+//   }
+// }
 
 ///|
-fn read_text_file(path : StringView) -> String raise {
-  let fd = @wasi.Fd::open(
-    path.to_string(),
-    rights=@wasi.Rights::new().set(Fd_read).set(Fd_filestat_get),
-  ) catch {
-    e => reraise(e)
-  }
-  let stat = fd.fd_filestat_get() catch { e => reraise(e) }
-  let size = stat.size
-  let buffer = FixedArray::make(size.0.to_int(), b'\x00')
-  let buf = FixedArray::make(1024, b'\x00')
-  let mut read = 0UL
-  while read < size.0 {
-    let n = fd.fd_read([buf]) catch { e => reraise(e) }
-    buf.blit_to(buffer, len=n.0.reinterpret_as_int(), dst_offset=read.to_int())
-    read += n.0.to_uint64()
-  }
-  @encoding/utf8.decode(buffer.unsafe_reinterpret_as_bytes()) catch {
-    e => reraise(e)
-  }
-}
+// fn read_text_file(path : StringView) -> String raise {
+//   let fd = @wasi.Fd::open(
+//     path.to_string(),
+//     rights=@wasi.Rights::new().set(Fd_read).set(Fd_filestat_get),
+//   ) catch {
+//     e => reraise(e)
+//   }
+//   let stat = fd.fd_filestat_get() catch { e => reraise(e) }
+//   let size = stat.size
+//   let buffer = FixedArray::make(size.0.to_int(), b'\x00')
+//   let buf = FixedArray::make(1024, b'\x00')
+//   let mut read = 0UL
+//   while read < size.0 {
+//     let n = fd.fd_read([buf]) catch { e => reraise(e) }
+//     buf.blit_to(buffer, len=n.0.reinterpret_as_int(), dst_offset=read.to_int())
+//     read += n.0.to_uint64()
+//   }
+//   @encoding/utf8.decode(buffer.unsafe_reinterpret_as_bytes()) catch {
+//     e => reraise(e)
+//   }
+// }
 
 ///|
 fn @wasi.Fd::open(
@@ -91,6 +91,25 @@ pub fn println(msg : String) -> Unit {
   while written < data.length() {
     let n = @wasi.stdout.fd_write([data[written:]]) catch { _ => return }
     written += n.0.reinterpret_as_int()
+  }
+}
+
+///|
+pub fn read_input() -> String raise {
+  let fd = @wasi.stdin
+  let buffer = @buffer.new(size_hint=1024)
+  let buf = FixedArray::make(1024, b'\x00')
+  while true {
+    let n = fd.fd_read([buf]) catch { e => reraise(e) }
+    let read = n.0.to_uint64()  
+    if read == 0 {
+      break
+    } else {
+      buffer.write_bytesview(buf.unsafe_reinterpret_as_bytes()[:read.to_int()])
+    }
+  }
+  @encoding/utf8.decode(buffer.to_bytes()) catch {
+    e => reraise(e)
   }
 }
 

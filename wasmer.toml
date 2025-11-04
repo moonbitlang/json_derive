@@ -1,6 +1,6 @@
 [package]
-name = 'yoorkin/derive_json_schema'
-version = '0.1.1'
+name = 'moonbitlang/derive_json_schema'
+version = '0.1.2'
 description = 'Derive JSON schema for MoonBit'
 
 # See more keys and definitions at https://docs.wasmer.io/registry/manifest
