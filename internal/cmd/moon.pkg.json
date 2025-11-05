@@ -4,7 +4,7 @@
     "moonbitlang/parser",
     "moonbitlang/formatter",
     "peter-jerry-ye/wasi",
-    "Yoorkin/derive_json_schema"
+    "moonbitlang/json_derive/internal/codegen"
   ],
   "is-main": true,
   "link": {

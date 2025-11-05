@@ -1,9 +1,5 @@
 {
-  "import": [
-    "moonbitlang/parser/syntax",
-    "moonbitlang/parser/attribute",
-    "moonbitlang/parser/basic",
-    "moonbitlang/parser",
-    "moonbitlang/formatter"
-  ]
+    "import": [
+        "moonbitlang/json_derive/runtime"
+    ]
 }

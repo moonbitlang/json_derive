@@ -1,5 +1,5 @@
 ///|
-using @derive_json_schema {reraise, fail_with, derive_json_schema}
+using @codegen {derive_json}
 
 ///|
 fn main {
@@ -9,7 +9,7 @@ fn main {
     guard report is [] else {
       fail("Parse error: \{report.to_json().stringify(indent=2)}")
     }
-    let ast = derive_json_schema(ast)
+    let ast = derive_json(ast)
     let result = @formatter.impls_to_string(ast)
     println(result)
   } catch {

@@ -1,1 +1,0 @@
-cat ./input.mbt | wasmer run .. --dir . > ./output.mbt

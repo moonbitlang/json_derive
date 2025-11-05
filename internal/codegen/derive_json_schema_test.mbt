@@ -3,7 +3,7 @@ test {
   let source =
     #|///|
     #|/// doc for pos
-    #|#json.schema
+    #|#json.private_derive
     #|struct Pos {
     #|  #json.enumerate(string("a", "b", "c"))
     #|  v : String
@@ -20,7 +20,7 @@ test {
     #|}
     #|
     #|/// doc for location
-    #|#json.schema
+    #|#json.derive
     #|struct Location {
     #|  /// start pos
     #|  start : Pos?
@@ -29,7 +29,7 @@ test {
     #|  points : Array[Pos]
     #|}
   let (ast, _) = @parser.parse_string(source)
-  let ast = derive_json_schema(ast)
+  let ast = derive_json(ast)
   let result = @formatter.impls_to_string(ast)
   inspect(
     result,
@@ -57,7 +57,46 @@ test {
       #|
       #|///|
       #|#json.generated
-      #|fn Location::get_schema() -> Json {
+      #|priv impl @moonbitlang/json_derive.Decode for Pos with decode(self, path) {
+      #|  match self {
+      #|    { "v": v, "w": w, "x"?: x, "y"?: y, "z": z } => {
+      #|      v: @moonbitlang/json_derive.decode(v, Key(path, "v")),
+      #|      w: @moonbitlang/json_derive.decode(w, Key(path, "w")),
+      #|      x: match x {
+      #|        Some(value) => 
+      #|          Some(@moonbitlang/json_derive.decode(value, Key(path, "x")))
+      #|        None => Some("*")
+      #|      },
+      #|      y: match y {
+      #|        Some(value) => 
+      #|          Some(@moonbitlang/json_derive.decode(value, Key(path, "y")))
+      #|        None => Some(false)
+      #|      },
+      #|      z: @moonbitlang/json_derive.decode(z, Key(path, "z")),
+      #|    }
+      #|    _ => @moonbitlang/json_derive.fail(self, path)
+      #|  }
+      #|}
+      #|
+      #|///|
+      #|#json.generated
+      #|priv impl @moonbitlang/json_derive.Encode for Pos with encode(self) {
+      #|  let result = {  }
+      #|  result["v"] =  encode(self.v)
+      #|  result["w"] =  encode(self.w)
+      #|  if self.x is Some(value) {
+      #|    result["x"] =  encode(value)
+      #|  }
+      #|  if self.y is Some(value) {
+      #|    result["y"] =  encode(value)
+      #|  }
+      #|  result["z"] =  encode(self.z)
+      #|  result
+      #|}
+      #|
+      #|///|
+      #|#json.generated
+      #|pub fn Location::get_schema() -> Json {
       #|  {
       #|    "type": "object",
       #|    "required": ["end", "points"],
@@ -71,8 +110,30 @@ test {
       #|  }
       #|}
       #|
+      #|///|
+      #|#json.generated
+      #|pub impl @moonbitlang/json_derive.Decode for Location with decode(self, path) {
+      #|  match self {
+      #|    { "start": start, "end": end, "points": points } => {
+      #|      start: @moonbitlang/json_derive.decode(start, Key(path, "start")),
+      #|      end: @moonbitlang/json_derive.decode(end, Key(path, "end")),
+      #|      points: @moonbitlang/json_derive.decode(points, Key(path, "points")),
+      #|    }
+      #|    _ => @moonbitlang/json_derive.fail(self, path)
+      #|  }
+      #|}
       #|
-
+      #|///|
+      #|#json.generated
+      #|pub impl @moonbitlang/json_derive.Encode for Location with encode(self) {
+      #|  let result = {  }
+      #|  result["start"] =  encode(self.start)
+      #|  result["end"] =  encode(self.end)
+      #|  result["points"] =  encode(self.points)
+      #|  result
+      #|}
+      #|
+      #|
     ),
   )
 }
@@ -80,37 +141,37 @@ test {
 ///|
 test "panic - invalid T with default" {
   let source =
-    #|#json.schema
+    #|#json.derive
     #|struct Pos {
     #|  #json.default(integer("10"))
     #|  w : Int
     #|}
   let (ast, _) = @parser.parse_string(source)
-  let _ = derive_json_schema(ast)
+  let _ = derive_json(ast)
 
 }
 
 ///|
 test "panic - invalid nested option" {
   let source =
-    #|#json.schema
+    #|#json.derive
     #|struct Pos {
     #|  w : Int??
     #|}
   let (ast, _) = @parser.parse_string(source)
-  let _ = derive_json_schema(ast)
+  let _ = derive_json(ast)
 
 }
 
 ///|
 test "array with nullable" {
   let source =
-    #|#json.schema
+    #|#json.derive
     #|struct Pos {
     #|  w : Array[Int?]
     #|}
   let (ast, _) = @parser.parse_string(source)
-  let ast = derive_json_schema(ast)
+  let ast = derive_json(ast)
   let result = @formatter.impls_to_string(ast)
   inspect(
     result,

@@ -1,24 +1,20 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "Yoorkin/derive_json_schema"
+package "moonbitlang/json_derive"
 
 import(
-  "moonbitlang/core/list"
-  "moonbitlang/parser/syntax"
+  "moonbitlang/json_derive/runtime"
 )
 
 // Values
-fn derive_json_schema(@list.List[@syntax.Impl]) -> @list.List[@syntax.Impl]
+fn[T : @runtime.Decode] decode(Json, path? : @runtime.Path) -> T raise @runtime.DecodeError
 
 // Errors
 
 // Types and methods
-type Constant
-
-type Property
-
-type Schema
 
 // Type aliases
+using @runtime {trait Decode}
+
+using @runtime {trait Encode}
 
 // Traits
-

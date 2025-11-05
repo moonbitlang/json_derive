@@ -1,0 +1,12 @@
+{
+  "pre-build": [
+    {
+      "command": "cat $input | wasmer run --dir $mod_dir ../cmd | moonfmt - > $output",
+      "input": "input.mbt",
+      "output": "output.mbt"
+    }
+  ],
+  "import": [
+    { "path": "moonbitlang/json_derive/runtime", "alias": "json_derive" }
+  ]
+}

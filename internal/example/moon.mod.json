@@ -1,0 +1,8 @@
+{
+  "name": "moonbitlang/derived-json",
+  "deps": {
+    "moonbitlang/json_derive": {
+      "path": "../.."
+    }
+  }
+}

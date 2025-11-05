@@ -1,9 +1,0 @@
-{
-  "pre-build": [
-    {
-      "command": "wasmer run --dir $mod_dir .. -- $input -o $output",
-      "input": "input.mbt",
-      "output": "output.mbt"
-    }
-  ]
-}

@@ -1,5 +1,6 @@
-#json.schema
-priv struct Params {
+///|
+#json.derive
+pub struct Params {
   /// The kind of search to perform. 
   /// 'regex' performs traditional regex-based file content search. 
   /// 'moonbit_definition' performs fuzzy symbolic search to find MoonBit symbol definitions 
@@ -21,11 +22,43 @@ priv struct Params {
   /// For 'regex' kind: regular expression pattern with full regex syntax. 
   /// For 'moonbit_definition' kind: symbol name or partial name (can be imprecise) for fuzzy symbolic search.
   regex : String
-} 
+} derive(Show)
 
-
-#json.schema
+///|
+#json.derive
 struct Table {
   head : Params
-  tail : Array[Params]
+  tail : Array[Int]
+  tail2 : Array[Double?]
+} derive(Show)
+
+///|
+test {
+  let table = {
+    head: {
+      kind: "123",
+      path: "abc",
+      file_pattern: Some("cde"),
+      context_lines: None,
+      regex: "regex1",
+    },
+    tail: [1, 2, 3, 4, 5],
+    tail2: [Some(1.2), None],
+  }
+  @json.inspect(table.encode(), content={
+    "head": {
+      "kind": "123",
+      "path": "abc",
+      "file_pattern": "cde",
+      "regex": "regex1",
+    },
+    "tail": [1, 2, 3, 4, 5],
+    "tail2": [1.2, null],
+  })
+  inspect(
+    (@json_derive.decode(table.encode()) : Table),
+    content=(
+      #|{head: {kind: "123", path: "abc", file_pattern: Some("cde"), context_lines: Some(2), regex: "regex1"}, tail: [1, 2, 3, 4, 5], tail2: [Some(1.2), None]}
+    ),
+  )
 }
