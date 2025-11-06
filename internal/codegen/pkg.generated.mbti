@@ -16,3 +16,4 @@ fn derive_json(@list.List[@syntax.Impl]) -> @list.List[@syntax.Impl]
 // Type aliases
 
 // Traits
+

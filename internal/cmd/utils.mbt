@@ -38,7 +38,6 @@
 //   }
 // }
 
-
 // ///|
 // fn @wasi.Fd::open(
 //   path : String,
@@ -102,7 +101,7 @@ pub fn read_input() -> String raise {
   let buf = FixedArray::make(1024, b'\x00')
   while true {
     let n = fd.fd_read([buf]) catch { e => reraise(e) }
-    let read = n.0.to_uint64()  
+    let read = n.0.to_uint64()
     if read == 0 {
       break
     } else {

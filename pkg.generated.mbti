@@ -1,20 +1,57 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "moonbitlang/json_deriving"
 
-import(
-  "moonbitlang/json_deriving/runtime"
-)
-
 // Values
-fn[T : @runtime.Decode] decode(Json, path? : @runtime.Path) -> T raise @runtime.DecodeError
+fn[T : Decode] decode(Json, path? : Path) -> T raise DecodeError
+
+fn[T] fail(Path, Json) -> T raise DecodeError
 
 // Errors
+pub suberror DecodeError (Path, Json)
+impl Show for DecodeError
 
 // Types and methods
+pub(all) enum Path {
+  Root
+  Key(Path, String)
+  Index(Path, Int)
+}
+impl Eq for Path
+impl Show for Path
 
 // Type aliases
-using @runtime {trait Decode}
-
-using @runtime {trait Encode}
 
 // Traits
+pub(open) trait Decode {
+  decode(Json, Path) -> Self raise DecodeError
+}
+impl Decode for Bool
+impl Decode for Int
+impl Decode for Int16
+impl Decode for Int64
+impl Decode for UInt
+impl Decode for UInt64
+impl Decode for Float
+impl Decode for Double
+impl Decode for String
+impl[T : Decode] Decode for T?
+impl[T : Decode, E : Decode] Decode for Result[T, E]
+impl[T : Decode] Decode for Array[T]
+
+pub(open) trait Encode {
+  #as_free_fn
+  encode(Self) -> Json
+}
+impl Encode for Bool
+impl Encode for Int
+impl Encode for Int16
+impl Encode for Int64
+impl Encode for UInt
+impl Encode for UInt64
+impl Encode for Float
+impl Encode for Double
+impl Encode for String
+impl[T : Encode] Encode for T?
+impl[T : Encode, E : Encode] Encode for Result[T, E]
+impl[T : Encode] Encode for Array[T]
+

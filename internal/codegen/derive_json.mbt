@@ -463,7 +463,6 @@ fn derive_decode(decl : @syntax.TypeDecl, private~ : Bool) -> @syntax.Impl {
       guard schema is Object(properties~, required=_) else {
         abort("unreachable")
       }
-      
       let self_expr = e_id("self")
       let path_expr = e_id("path")
       let succeed_case = {
@@ -484,10 +483,7 @@ fn derive_decode(decl : @syntax.TypeDecl, private~ : Bool) -> @syntax.Impl {
                 e_apply(e_constr("Some"), [
                   e_apply(e_method(pkg~, "Decode", "decode"), [
                     e_id("value"),
-                    e_apply(e_constr("Key"), [
-                      path_expr,
-                      e_string(name),
-                    ]),
+                    e_apply(e_constr("Key"), [path_expr, e_string(name)]),
                   ]),
                 ]),
               ),
@@ -565,7 +561,6 @@ fn derive_decode(decl : @syntax.TypeDecl, private~ : Bool) -> @syntax.Impl {
     doc=@syntax.DocString::empty(),
   )
 }
-
 
 ///|
 fn derive_encode(decl : @syntax.TypeDecl, private~ : Bool) -> @syntax.Impl {

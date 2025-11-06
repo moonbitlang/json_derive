@@ -36,7 +36,11 @@ pub fn[A] reraise(e : Error, loc~ : SourceLoc) -> A raise {
 
 ///|
 #callsite(autofill(loc))
-pub fn[A] fail_with(message : String, cause : Error, loc~ : SourceLoc) -> A raise {
+pub fn[A] fail_with(
+  message : String,
+  cause : Error,
+  loc~ : SourceLoc,
+) -> A raise {
   raise Reraise(
     (
       (
