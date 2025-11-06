@@ -26,5 +26,4 @@ const ENCODE = "Encode"
 const SCHEMA = "Schema"
 
 ///|
-let pkg = "moonbitlang/json_derive"
-
+let pkg = "moonbitlang/json_deriving"

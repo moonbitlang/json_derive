@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "moonbitlang/json_derive/internal/codegen"
+package "moonbitlang/json_deriving/internal/codegen"
 
 import(
   "moonbitlang/core/list"

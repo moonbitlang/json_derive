@@ -1,8 +1,8 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "moonbitlang/json_derive"
+package "moonbitlang/json_deriving"
 
 import(
-  "moonbitlang/json_derive/runtime"
+  "moonbitlang/json_deriving/runtime"
 )
 
 // Values

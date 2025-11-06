@@ -34,7 +34,7 @@ pub fn Params::get_schema() -> Json {
 
 ///|
 #json.generated
-pub impl @moonbitlang/json_derive.Decode for Params with decode(self, path) {
+pub impl @moonbitlang/json_deriving.Decode for Params with decode(self, path) {
   match self {
     {
       "kind": x0,
@@ -45,41 +45,41 @@ pub impl @moonbitlang/json_derive.Decode for Params with decode(self, path) {
       ..
     } =>
       {
-        kind: @moonbitlang/json_derive.Decode::decode(x0, Key(path, "x0")),
-        path: @moonbitlang/json_derive.Decode::decode(x1, Key(path, "x1")),
+        kind: @moonbitlang/json_deriving.Decode::decode(x0, Key(path, "x0")),
+        path: @moonbitlang/json_deriving.Decode::decode(x1, Key(path, "x1")),
         file_pattern: match x2 {
           Some(value) =>
             Some(
-              @moonbitlang/json_derive.Decode::decode(value, Key(path, "x2")),
+              @moonbitlang/json_deriving.Decode::decode(value, Key(path, "x2")),
             )
           None => Some("*")
         },
         context_lines: match x3 {
           Some(value) =>
             Some(
-              @moonbitlang/json_derive.Decode::decode(value, Key(path, "x3")),
+              @moonbitlang/json_deriving.Decode::decode(value, Key(path, "x3")),
             )
           None => Some(2)
         },
-        regex: @moonbitlang/json_derive.Decode::decode(x4, Key(path, "x4")),
+        regex: @moonbitlang/json_deriving.Decode::decode(x4, Key(path, "x4")),
       }
-    _ => @moonbitlang/json_derive.fail(path, self)
+    _ => @moonbitlang/json_deriving.fail(path, self)
   }
 }
 
 ///|
 #json.generated
-pub impl @moonbitlang/json_derive.Encode for Params with encode(self) {
+pub impl @moonbitlang/json_deriving.Encode for Params with encode(self) {
   let result = {}
-  result["kind"] = @moonbitlang/json_derive.Encode::encode(self.kind)
-  result["path"] = @moonbitlang/json_derive.Encode::encode(self.path)
+  result["kind"] = @moonbitlang/json_deriving.Encode::encode(self.kind)
+  result["path"] = @moonbitlang/json_deriving.Encode::encode(self.path)
   if self.file_pattern is Some(value) {
-    result["file_pattern"] = @moonbitlang/json_derive.Encode::encode(value)
+    result["file_pattern"] = @moonbitlang/json_deriving.Encode::encode(value)
   }
   if self.context_lines is Some(value) {
-    result["context_lines"] = @moonbitlang/json_derive.Encode::encode(value)
+    result["context_lines"] = @moonbitlang/json_deriving.Encode::encode(value)
   }
-  result["regex"] = @moonbitlang/json_derive.Encode::encode(self.regex)
+  result["regex"] = @moonbitlang/json_deriving.Encode::encode(self.regex)
   Json::object(result)
 }
 
@@ -100,24 +100,24 @@ pub fn Table::get_schema() -> Json {
 
 ///|
 #json.generated
-pub impl @moonbitlang/json_derive.Decode for Table with decode(self, path) {
+pub impl @moonbitlang/json_deriving.Decode for Table with decode(self, path) {
   match self {
     { "head": x0, "tail": x1, "tail2": x2, .. } =>
       {
-        head: @moonbitlang/json_derive.Decode::decode(x0, Key(path, "x0")),
-        tail: @moonbitlang/json_derive.Decode::decode(x1, Key(path, "x1")),
-        tail2: @moonbitlang/json_derive.Decode::decode(x2, Key(path, "x2")),
+        head: @moonbitlang/json_deriving.Decode::decode(x0, Key(path, "x0")),
+        tail: @moonbitlang/json_deriving.Decode::decode(x1, Key(path, "x1")),
+        tail2: @moonbitlang/json_deriving.Decode::decode(x2, Key(path, "x2")),
       }
-    _ => @moonbitlang/json_derive.fail(path, self)
+    _ => @moonbitlang/json_deriving.fail(path, self)
   }
 }
 
 ///|
 #json.generated
-pub impl @moonbitlang/json_derive.Encode for Table with encode(self) {
+pub impl @moonbitlang/json_deriving.Encode for Table with encode(self) {
   let result = {}
-  result["head"] = @moonbitlang/json_derive.Encode::encode(self.head)
-  result["tail"] = @moonbitlang/json_derive.Encode::encode(self.tail)
-  result["tail2"] = @moonbitlang/json_derive.Encode::encode(self.tail2)
+  result["head"] = @moonbitlang/json_deriving.Encode::encode(self.head)
+  result["tail"] = @moonbitlang/json_deriving.Encode::encode(self.tail)
+  result["tail2"] = @moonbitlang/json_deriving.Encode::encode(self.tail2)
   Json::object(result)
 }

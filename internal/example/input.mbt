@@ -56,7 +56,7 @@ test {
     "tail2": [1.2, null],
   })
   inspect(
-    (@json_derive.decode(table.encode()) : Table),
+    (@json_deriving.decode(table.encode()) : Table),
     content=(
       #|{head: {kind: "123", path: "abc", file_pattern: Some("cde"), context_lines: Some(2), regex: "regex1"}, tail: [1, 2, 3, 4, 5], tail2: [Some(1.2), None]}
     ),

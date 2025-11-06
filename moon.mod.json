@@ -1,5 +1,5 @@
 {
-  "name": "moonbitlang/json_derive",
+  "name": "moonbitlang/json_deriving",
   "version": "0.1.0",
   "deps": {
     "moonbitlang/formatter": "0.1.1",
@@ -7,9 +7,14 @@
     "peter-jerry-ye/wasi": "0.22.4"
   },
   "readme": "README.mbt.md",
-  "repository": "",
+  "repository": "https://github.com/moonbitlang/json_deriving",
   "license": "Apache-2.0",
-  "keywords": [],
-  "description": "",
+  "keywords": [
+    "json",
+    "derive",
+    "serialization",
+    "deserialization"
+  ],
+  "description": "deriving JSON serialization and deserialization automatically",
   "preferred-target": "wasm"
 }

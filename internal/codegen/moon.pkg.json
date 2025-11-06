@@ -2,7 +2,9 @@
   "import": [
     "moonbitlang/parser/syntax",
     "moonbitlang/parser/attribute",
-    "moonbitlang/parser/basic",
+    "moonbitlang/parser/basic"
+  ],
+  "test-import": [
     "moonbitlang/parser",
     "moonbitlang/formatter"
   ]

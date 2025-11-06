@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "moonbitlang/json_derive/internal/cmd"
+package "moonbitlang/json_deriving/internal/cmd"
 
 // Values
 fn eprintln(String) -> Unit

@@ -57,30 +57,30 @@ test {
       #|
       #|///|
       #|#json.generated
-      #|priv impl @moonbitlang/json_derive.Decode for Pos with decode(self, path) {
+      #|priv impl @moonbitlang/json_deriving.Decode for Pos with decode(self, path) {
       #|  match self {
       #|    { "v": v, "w": w, "x"?: x, "y"?: y, "z": z } => {
-      #|      v: @moonbitlang/json_derive.decode(v, Key(path, "v")),
-      #|      w: @moonbitlang/json_derive.decode(w, Key(path, "w")),
+      #|      v: @moonbitlang/json_deriving.decode(v, Key(path, "v")),
+      #|      w: @moonbitlang/json_deriving.decode(w, Key(path, "w")),
       #|      x: match x {
       #|        Some(value) => 
-      #|          Some(@moonbitlang/json_derive.decode(value, Key(path, "x")))
+      #|          Some(@moonbitlang/json_deriving.decode(value, Key(path, "x")))
       #|        None => Some("*")
       #|      },
       #|      y: match y {
       #|        Some(value) => 
-      #|          Some(@moonbitlang/json_derive.decode(value, Key(path, "y")))
+      #|          Some(@moonbitlang/json_deriving.decode(value, Key(path, "y")))
       #|        None => Some(false)
       #|      },
-      #|      z: @moonbitlang/json_derive.decode(z, Key(path, "z")),
+      #|      z: @moonbitlang/json_deriving.decode(z, Key(path, "z")),
       #|    }
-      #|    _ => @moonbitlang/json_derive.fail(self, path)
+      #|    _ => @moonbitlang/json_deriving.fail(self, path)
       #|  }
       #|}
       #|
       #|///|
       #|#json.generated
-      #|priv impl @moonbitlang/json_derive.Encode for Pos with encode(self) {
+      #|priv impl @moonbitlang/json_deriving.Encode for Pos with encode(self) {
       #|  let result = {  }
       #|  result["v"] =  encode(self.v)
       #|  result["w"] =  encode(self.w)
@@ -112,20 +112,20 @@ test {
       #|
       #|///|
       #|#json.generated
-      #|pub impl @moonbitlang/json_derive.Decode for Location with decode(self, path) {
+      #|pub impl @moonbitlang/json_deriving.Decode for Location with decode(self, path) {
       #|  match self {
       #|    { "start": start, "end": end, "points": points } => {
-      #|      start: @moonbitlang/json_derive.decode(start, Key(path, "start")),
-      #|      end: @moonbitlang/json_derive.decode(end, Key(path, "end")),
-      #|      points: @moonbitlang/json_derive.decode(points, Key(path, "points")),
+      #|      start: @moonbitlang/json_deriving.decode(start, Key(path, "start")),
+      #|      end: @moonbitlang/json_deriving.decode(end, Key(path, "end")),
+      #|      points: @moonbitlang/json_deriving.decode(points, Key(path, "points")),
       #|    }
-      #|    _ => @moonbitlang/json_derive.fail(self, path)
+      #|    _ => @moonbitlang/json_deriving.fail(self, path)
       #|  }
       #|}
       #|
       #|///|
       #|#json.generated
-      #|pub impl @moonbitlang/json_derive.Encode for Location with encode(self) {
+      #|pub impl @moonbitlang/json_deriving.Encode for Location with encode(self) {
       #|  let result = {  }
       #|  result["start"] =  encode(self.start)
       #|  result["end"] =  encode(self.end)

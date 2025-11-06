@@ -1,5 +1,5 @@
 [package]
-name = 'moonbitlang/json_derive'
+name = 'moonbitlang/json_deriving'
 version = '0.1.0'
 description = 'Derive JSON schema for MoonBit'
 
