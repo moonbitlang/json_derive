@@ -2,22 +2,23 @@
 package "moonbitlang/json_deriving"
 
 // Values
-fn[T : Decode] decode(Json, path? : Path) -> T raise DecodeError
+pub fn[T : Decode] decode(Json, path? : Path) -> T raise DecodeError
 
-fn[T] fail(Path, Json) -> T raise DecodeError
+pub fn[T] fail(Path, Json) -> T raise DecodeError
 
 // Errors
-pub suberror DecodeError (Path, Json)
-impl Show for DecodeError
+pub suberror DecodeError {
+  DecodeError((Path, Json))
+}
+pub impl Show for DecodeError
 
 // Types and methods
 pub(all) enum Path {
   Root
   Key(Path, String)
   Index(Path, Int)
-}
-impl Eq for Path
-impl Show for Path
+} derive(Eq)
+pub impl Show for Path
 
 // Type aliases
 
@@ -25,33 +26,33 @@ impl Show for Path
 pub(open) trait Decode {
   decode(Json, Path) -> Self raise DecodeError
 }
-impl Decode for Bool
-impl Decode for Int
-impl Decode for Int16
-impl Decode for Int64
-impl Decode for UInt
-impl Decode for UInt64
-impl Decode for Float
-impl Decode for Double
-impl Decode for String
-impl[T : Decode] Decode for T?
-impl[T : Decode, E : Decode] Decode for Result[T, E]
-impl[T : Decode] Decode for Array[T]
+pub impl Decode for Bool
+pub impl Decode for Int
+pub impl Decode for Int16
+pub impl Decode for Int64
+pub impl Decode for UInt
+pub impl Decode for UInt64
+pub impl Decode for Float
+pub impl Decode for Double
+pub impl Decode for String
+pub impl[T : Decode] Decode for T?
+pub impl[T : Decode, E : Decode] Decode for Result[T, E]
+pub impl[T : Decode] Decode for Array[T]
 
 pub(open) trait Encode {
   #as_free_fn
   encode(Self) -> Json
 }
-impl Encode for Bool
-impl Encode for Int
-impl Encode for Int16
-impl Encode for Int64
-impl Encode for UInt
-impl Encode for UInt64
-impl Encode for Float
-impl Encode for Double
-impl Encode for String
-impl[T : Encode] Encode for T?
-impl[T : Encode, E : Encode] Encode for Result[T, E]
-impl[T : Encode] Encode for Array[T]
+pub impl Encode for Bool
+pub impl Encode for Int
+pub impl Encode for Int16
+pub impl Encode for Int64
+pub impl Encode for UInt
+pub impl Encode for UInt64
+pub impl Encode for Float
+pub impl Encode for Double
+pub impl Encode for String
+pub impl[T : Encode] Encode for T?
+pub impl[T : Encode, E : Encode] Encode for Result[T, E]
+pub impl[T : Encode] Encode for Array[T]
 
