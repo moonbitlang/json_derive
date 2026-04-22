@@ -62,7 +62,7 @@ pub impl Decode for Int16 with decode(self, path) {
     Number(n, ..) => {
       let i = n.to_int()
       if i >= -32768 && i <= 32767 {
-        i.to_int16()
+        Int16::from_int(i)
       } else {
         fail(path, self)
       }
@@ -118,7 +118,7 @@ pub impl Encode for Float with encode(self) {
 ///|
 pub impl Decode for Float with decode(self, path) {
   match self {
-    Number(n, ..) => n.to_float()
+    Number(n, ..) => Float::from_double(n)
     _ => fail(path, self)
   }
 }
