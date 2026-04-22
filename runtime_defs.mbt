@@ -6,7 +6,9 @@ pub(all) enum Path {
 } derive(Eq)
 
 ///|
-pub suberror DecodeError (Path, Json)
+pub suberror DecodeError {
+  DecodeError((Path, Json))
+}
 
 ///|
 pub impl Show for Path with output(self, buf) {
@@ -14,11 +16,11 @@ pub impl Show for Path with output(self, buf) {
     Root => buf.write_string("$root")
     Key(path, key) => {
       path.output(buf)
-      buf..write_string(".")..write_string(key)
+      buf..write_string(".").write_string(key)
     }
     Index(path, idx) => {
       path.output(buf)
-      buf..write_string(".")..write_string(idx.to_string())
+      buf..write_string(".").write_string(idx.to_string())
     }
   }
 }
@@ -30,7 +32,7 @@ pub impl Show for DecodeError with output(self, buf) {
   ..write_string("Failed to decode json at ")
   ..write_string(path.to_string())
   ..write_string(":\n")
-  ..write_string(json.stringify(indent=2))
+  .write_string(json.stringify(indent=2))
 }
 
 ///|
