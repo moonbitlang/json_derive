@@ -10,6 +10,8 @@ pub fn[T] fail(Path, Json) -> T raise DecodeError
 pub suberror DecodeError {
   DecodeError((Path, Json))
 }
+pub fn DecodeError::output(Self, &Logger) -> Unit
+pub fn DecodeError::to_string(Self) -> String
 pub impl Show for DecodeError
 
 // Types and methods
@@ -18,13 +20,17 @@ pub(all) enum Path {
   Key(Path, String)
   Index(Path, Int)
 } derive(Eq)
+pub fn Path::equal(Self, Self) -> Bool
+pub fn Path::not_equal(Self, Self) -> Bool
+pub fn Path::output(Self, &Logger) -> Unit
+pub fn Path::to_string(Self) -> String
 pub impl Show for Path
 
 // Type aliases
 
 // Traits
 pub(open) trait Decode {
-  decode(Json, Path) -> Self raise DecodeError
+  fn decode(Json, Path) -> Self raise DecodeError
 }
 pub impl Decode for Bool
 pub impl Decode for Int
@@ -41,7 +47,7 @@ pub impl[T : Decode] Decode for Array[T]
 
 pub(open) trait Encode {
   #as_free_fn
-  encode(Self) -> Json
+  fn encode(Self) -> Json
 }
 pub impl Encode for Bool
 pub impl Encode for Int
@@ -55,4 +61,3 @@ pub impl Encode for String
 pub impl[T : Encode] Encode for T?
 pub impl[T : Encode, E : Encode] Encode for Result[T, E]
 pub impl[T : Encode] Encode for Array[T]
-
