@@ -11,7 +11,7 @@ pub suberror DecodeError {
 }
 
 ///|
-pub impl Show for Path with output(self, buf) {
+pub impl Show for Path with fn output(self, buf) {
   match self {
     Root => buf.write_string("$root")
     Key(path, key) => {
@@ -26,7 +26,7 @@ pub impl Show for Path with output(self, buf) {
 }
 
 ///|
-pub impl Show for DecodeError with output(self, buf) {
+pub impl Show for DecodeError with fn output(self, buf) {
   let DecodeError((path, json)) = self
   buf
   ..write_string("Failed to decode json at ")
@@ -39,13 +39,13 @@ pub impl Show for DecodeError with output(self, buf) {
 /// convert value to json
 pub(open) trait Encode {
   #as_free_fn
-  encode(Self) -> Json
+  fn encode(Self) -> Json
 }
 
 ///|
 /// convert json to value
 pub(open) trait Decode {
-  decode(Json, Path) -> Self raise DecodeError
+  fn decode(Json, Path) -> Self raise DecodeError
 }
 
 ///|
